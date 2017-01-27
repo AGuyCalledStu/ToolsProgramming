@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ToolsProgrammingLab.h"
+#include <stdio.h>
 
 #define MAX_LOADSTRING 100
 
@@ -10,6 +11,15 @@
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+
+// Calculator Variables:
+int numberOne = 0;
+int numberTwo = 0;
+LPWSTR numberInput = 0;
+bool isStepTwo = false;
+enum CALC_TYPE {ADD, SUB, MUL, DIV};
+CALC_TYPE calcType;
+
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -196,6 +206,35 @@ INT_PTR CALLBACK Calculator(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 			EndDialog(hDlg, LOWORD(wParam));
 			return (INT_PTR)TRUE;
 		}
+
+		int wmId = LOWORD(wParam);
+		// Parse the menu selections:
+		switch (wmId)
+		{
+		case IDC_DIVISION:
+			break;
+		case IDC_MULTIPLICATION:
+			break;
+		case IDC_SUBTRACTION:
+			break;
+		case IDC_ADDITION:
+			if (!isStepTwo)
+			{
+				isStepTwo = true;
+				calcType = ADD;
+				GetDlgItemText(hDlg, IDC_NUMBERBOX, numberInput, sizeof(numberInput));
+				//sscanf(numberInput, "%d", &numberOne);
+			}
+			if (isStepTwo)
+			{
+				isStepTwo = false;
+				GetDlgItemText(hDlg, IDC_NUMBERBOX, numberInput, sizeof(numberInput));
+			}
+			break;
+		case IDC_EQUALS:
+			break;		
+		}
+
 		break;
 	}
 	return (INT_PTR)FALSE;
